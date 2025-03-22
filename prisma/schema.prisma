@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for authentication
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String?  // Optional as per requirements
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  characters Character[]
+  campaigns  Campaign[]
+}
+
+// Character model for D&D character sheets
+model Character {
+  id             String   @id @default(uuid())
+  name           String
+  race           String
+  class          String
+  level          Int      @default(1)
+  strength       Int      @default(10)
+  dexterity      Int      @default(10)
+  constitution   Int      @default(10)
+  intelligence   Int      @default(10)
+  wisdom         Int      @default(10)
+  charisma       Int      @default(10)
+  hitPoints      Int      @default(10)
+  maxHitPoints   Int      @default(10)
+  armorClass     Int      @default(10)
+  background     String?
+  alignment      String?
+  experience     Int      @default(0)
+  proficiencies  String?  // JSON string of proficiencies
+  equipment      String?  // JSON string of equipment
+  spells         String?  // JSON string of spells
+  features       String?  // JSON string of features
+  notes          String?  @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  // Relations
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  campaignId     String?
+  campaign       Campaign? @relation(fields: [campaignId], references: [id])
+}
+
+// Campaign model for managing D&D campaigns
+model Campaign {
+  id          String   @id @default(uuid())
+  name        String
+  description String?  @db.Text
+  setting     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  characters  Character[]
+}
