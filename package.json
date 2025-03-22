@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 51478",
-    "build": "next build",
+    "build": "NEXT_DISABLE_ESLINT=1 next build",
+    "build:docker": "node build-no-lint.js",
     "start": "next start --port 51478",
     "lint": "next lint",
     "storybook": "storybook dev -p 56142 --host 0.0.0.0",

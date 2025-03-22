@@ -2,15 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Metadata } from 'next';
 import Link from 'next/link';
 import { CharacterForm, CharacterFormValues } from '@/components/character/character-form';
 import { Button } from '@/components/ui/button';
-
-export const metadata: Metadata = {
-  title: 'Create Character | D&D Campaign Manager',
-  description: 'Create a new D&D character',
-};
 
 /**
  * Create character page
