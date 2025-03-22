@@ -1,4 +1,4 @@
-version: '3.8'
+# Docker Compose configuration for D&D Campaign Manager
 
 services:
   app:
@@ -8,13 +8,13 @@ services:
     container_name: dnd-campaign-manager
     restart: unless-stopped
     ports:
-      - "51478:51478"  # NextJS app
-      - "56142:56142"  # Storybook
+      - "8080:51478"  # NextJS app
+      - "8081:56142"  # Storybook
     environment:
       - NODE_ENV=production
       - DATABASE_URL=mysql://dnduser:dndpassword@db:3306/dnd_campaign_manager
       - NEXTAUTH_SECRET=your-secret-key-for-jwt-signing
-      - NEXTAUTH_URL=http://localhost:51478
+      - NEXTAUTH_URL=http://localhost:8080
     depends_on:
       - db
     networks:
